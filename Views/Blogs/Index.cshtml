@@ -1,10 +1,21 @@
-﻿<div class="mainbar">
-    <div class="article">
-        <h2><span>Template</span> License</h2>
-        <div class="clr"></div>
-        <p><span class="date">On 11 sep 2018</span> Posted by <a href="#">Owner</a> &nbsp;|&nbsp; Filed under <a href="#">templates</a>, <a href="#">internet</a></p>
-        <img src="/images/img1.jpg" width="625" height="205" alt="" />
-        <p>This is a free CSS website template by CoolWebTemplates.net. This work is distributed under the Creative Commons Attribution 3.0 License, which means that you are free to use it for any personal or commercial purpose provided you leave the credit links in the template footer intact.</p>
-        <p class="spec"><a href="#" class="rm">Read more &raquo;</a> <a href="#" class="com"><span>11</span> Comments</a></p>
-    </div>
+﻿@model List<Blog>
+
+<div class="mainbar">
+    @foreach(var item in Model)
+    {
+        <div class="article">
+            <h2><span>@item.Name</span> </h2>
+            <div class="clr"></div>
+            <p><span class="date">@item.PublishDate</span> Posted by <a href="#">Owner</a> &nbsp;|&nbsp; Filed under <a href="#">@item.Tags</a>, <a href="#">internet</a></p>
+            @* <img src="/images/img1.jpg" width="625" height="205" alt="" />*@
+            <img src="@item.ImageUrl" width="625" height="205" alt="" />
+            <p>@item.Description</p>
+            <p class="spec"><a href="#" class="rm">Read more &raquo;</a> 
+                <a href="#" class="com"><span>@item.CommentCount</span> Comments</a>
+                <a href="#" class="com"><span>@item.LikeCount</span> Like</a>
+                <a href="#" class="com"><span>@item.ViewCount</span> View</a>
+            </p>
+        </div>
+    }
+    
 </div>

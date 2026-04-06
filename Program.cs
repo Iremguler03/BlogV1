@@ -1,8 +1,8 @@
 using BlogV1.Context;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
+//
+builder.WebHost.UseWebRoot("wwwroot");
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BlogDbContext>();
 var app = builder.Build();

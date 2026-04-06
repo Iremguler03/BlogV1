@@ -1,4 +1,5 @@
 ﻿using BlogV1.Context;
+using BlogV1.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogV1.Controllers
@@ -15,13 +16,22 @@ namespace BlogV1.Controllers
         public IActionResult Index()
         {
             //var blogs = _context.Blogs.ToList();
-            var blogs = _context.Blogs.Where(x=>x.Status==1).ToList();
+            var blogs = _context.Blogs.Where(x => x.Status == 1).ToList();
             return View(blogs);
         }
         public IActionResult Details(int id)
         {
             var blog = _context.Blogs.Where(x => x.Id == id).FirstOrDefault();
             return View(blog);
+        }
+        [HttpPost]
+        public IActionResult CreateComment(Comment model)
+        {
+            model.PublishDate = DateTime.Now;
+            _context.Comments.Add(model);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+
         }
     }
 }

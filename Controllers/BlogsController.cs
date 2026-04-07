@@ -22,6 +22,8 @@ namespace BlogV1.Controllers
         public IActionResult Details(int id)
         {
             var blog = _context.Blogs.Where(x => x.Id == id).FirstOrDefault();
+            var comment=_context.Comments.Where(x => x.BlogId == id).ToList();
+            ViewBag.Comments = comment.ToList();
             return View(blog);
         }
         [HttpPost]
@@ -30,7 +32,7 @@ namespace BlogV1.Controllers
             model.PublishDate = DateTime.Now;
             _context.Comments.Add(model);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id = model.BlogId });
 
         }
     }

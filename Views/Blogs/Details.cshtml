@@ -13,17 +13,20 @@
     <div class="article">
         <h2><span>Yorumlar</span> </h2>
         <div class="clr"></div>
-        <div class="comment">
-            <a href="#"><img src="/images/userpic.gif" width="40" height="40" alt="" class="userpic" /></a>
-            <p>
-                <a href="#">admin</a> :<br />
-                .ToString("MMMM d\\t\\h, yyyy 'at' h:mm tt")
-            </p>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.</p>
-        </div>
+        @foreach (var item in ViewBag.Comments)
+        {
+            <div class="comment">
+                <a href="#"><img src="/images/userpic.gif" width="40" height="40" alt="" class="userpic" /></a>
+                <p>
+                    <a href="#">@item.Name</a> :<br />
+                    @item.PublishDate.ToString("MMMM d\\t\\h, yyyy 'at' h:mm tt")
+                </p>
+                <p>@item.Message</p>
+            </div>
+        }
     </div>
     <div class="article">
-        <h2><span>Leave a</span> Reply</h2>
+        <h2><span>Yorum</span> Yapin</h2>
         <div class="clr"></div>
         <form action="/Blogs/CreateComment" method="post" id="leavereply">
             <ol>

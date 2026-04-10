@@ -1,5 +1,7 @@
 ﻿using BlogV1.Context;
+using BlogV1.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace BlogV1.Controllers
 {
@@ -21,6 +23,49 @@ namespace BlogV1.Controllers
             var blogs = _context.Blogs.ToList();
             return View(blogs);
         }
-            
+        
+        public IActionResult EditBlog(int id)
+        {
+            var blog = _context.Blogs.Where(x => x.Id == id).FirstOrDefault();
+            return View(blog);
+        }
+
+        //blog silme islemi
+        public IActionResult DeleteBlog(int id)
+        {
+            var blog = _context.Blogs.Where(x => x.Id == id).FirstOrDefault();
+            _context.Blogs.Remove(blog);
+            _context.SaveChanges();
+            return RedirectToAction("Blogs");
+        }
+
+        //edit post islemi
+        [HttpPost]
+        public IActionResult EditBlog(Blog model)
+        {
+            var blog=_context.Blogs.Where(x => x.Id == model.Id).FirstOrDefault();
+            blog.Name = model.Name;
+            blog.Description = model.Description;
+            blog.Tags = model.Tags;
+            blog.ImageUrl = model.ImageUrl;
+            _context.SaveChanges();
+            return RedirectToAction("Blogs");
+        }
+
+        //status toogle ac kapa blogu
+        public IActionResult ToggleStatus(int id)
+        {
+            var blog = _context.Blogs.Where(x => x.Id == id).FirstOrDefault();
+            if (blog.Status == 1)
+            {
+                blog.Status = 0;
+            }
+            else
+            {
+                blog.Status = 1;
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Blogs");
+        }
     }
 }

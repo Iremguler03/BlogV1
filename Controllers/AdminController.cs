@@ -18,12 +18,12 @@ namespace BlogV1.Controllers
         {
             return View();
         }
-        public IActionResult Blogs() 
+        public IActionResult Blogs()
         {
             var blogs = _context.Blogs.ToList();
             return View(blogs);
         }
-        
+
         public IActionResult EditBlog(int id)
         {
             var blog = _context.Blogs.Where(x => x.Id == id).FirstOrDefault();
@@ -43,7 +43,7 @@ namespace BlogV1.Controllers
         [HttpPost]
         public IActionResult EditBlog(Blog model)
         {
-            var blog=_context.Blogs.Where(x => x.Id == model.Id).FirstOrDefault();
+            var blog = _context.Blogs.Where(x => x.Id == model.Id).FirstOrDefault();
             blog.Name = model.Name;
             blog.Description = model.Description;
             blog.Tags = model.Tags;
@@ -64,6 +64,21 @@ namespace BlogV1.Controllers
             {
                 blog.Status = 1;
             }
+            _context.SaveChanges();
+            return RedirectToAction("Blogs");
+        }
+
+        public IActionResult CreateBlog()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateBlog(Blog model)
+        {
+            model.PublishDate = DateTime.Now;
+            model.Status = 1;
+            _context.Blogs.Add(model);
             _context.SaveChanges();
             return RedirectToAction("Blogs");
         }

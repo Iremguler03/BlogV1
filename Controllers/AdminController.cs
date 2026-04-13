@@ -82,5 +82,28 @@ namespace BlogV1.Controllers
             _context.SaveChanges();
             return RedirectToAction("Blogs");
         }
+
+        public IActionResult Comments(int? blogId)
+        {
+            var comments = new List<Comment>();
+            if (blogId == null)
+            {
+                comments = _context.Comments.ToList();
+
+            }
+            else
+            {
+                comments = _context.Comments.Where(x=>x.BlogId==blogId).ToList();
+            }
+            return View(comments);
+        }
+
+        public IActionResult DeleteComment(int id)
+        {
+            var comment = _context.Comments.Where(x => x.Id == id).FirstOrDefault();
+            _context.Comments.Remove(comment);
+            _context.SaveChanges();
+            return RedirectToAction("Comments");
+        }
     }
 }

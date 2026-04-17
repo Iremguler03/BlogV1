@@ -117,11 +117,17 @@ namespace BlogV1.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            if (model.Password == null)
+            {
+                return Content("Şifre gelmedi");
+            }
+
             if (model.Password == model.Repassword)
             {
                 var user = new BlogIdentityUser
                 {
                     Name = model.Name,
+
                     Surname = model.Surname,
                     Email = model.Email,
                     UserName=model.Email,

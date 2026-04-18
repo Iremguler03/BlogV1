@@ -147,5 +147,17 @@ namespace BlogV1.Controllers
                 return View(); 
             }
         }
+
+        //public async Task<IActionResult> Logout()
+        //{
+        //    await _signInManager.SignOutAsync();
+        //    return RedirectToAction("Index", "Blogs");
+        //}
+
+        public IActionResult Contact()
+        {
+            var contact = _context.Contacts.ToList();
+            return View(contact);
+        }
     }
 }
